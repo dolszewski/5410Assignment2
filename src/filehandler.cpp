@@ -11,18 +11,18 @@ std::string Filehandler::read() {
 }
 
 std::string Filehandler::write() {
-    //std::ifstream myFile; //Problem exists here!!!
-    //myFile.open(filename);
-    struct stat buffer;
-    int existenceFlag = stat(filename.c_str(),&buffer);
-
-    if (existenceFlag != 0) {
-        std::cout << "Creating the file";
-    } else {
+    std::ifstream ifile(filename.c_str()); //Problem exists here!!!
+    std::cout << "conditional";
+    if ((bool) ifile) {
         std::cout << "\nFile already exists\n";
         exit(33);
+    } else {
+        std::cout << "\nCreating File\n";
+        std::ofstream myFile(filename.c_str());
+        myFile.close();
     }
-   return NULL;
+    
+   return "nothing";
 }
 
 void Filehandler::filenameAdd() {
@@ -32,3 +32,4 @@ void Filehandler::filenameAdd() {
 void Filehandler::filenameSubtract() {
     return;
 }
+
