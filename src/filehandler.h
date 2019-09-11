@@ -1,4 +1,4 @@
-// file.h
+// filehandler.h
 // Header file for the file class. Handles reading and writing of files.
 
 #ifndef FILEHANDLER_H
@@ -10,7 +10,7 @@ class Filehandler {
     public:
       Filehandler(std::string filename1);
       std::string read();
-      std::string write();
+      int write(std::string text);
       void filenameAdd();
       void filenameSubtract();
 }; //file

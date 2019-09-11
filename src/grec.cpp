@@ -3,7 +3,9 @@
 
 #include "filehandler.h"
 #include "crypt.h"
-#include "client.h"
+#include "server.h"
+
+
 using namespace std;
 
 int main(int argc, char *argv[]) {
@@ -13,16 +15,17 @@ int main(int argc, char *argv[]) {
     }
     if (argc == 3 && (string) argv[2] == "-l"){
         Filehandler data(argv[1]);
-        Crypt myEncryption(data.read());
-        myEncryption.encrypt();
-        data.filenameAdd();
-        data.write(myEncryption.getText());
+        Crypt myDecryption(argv[1]);
+        myDecryption.decrypt();
+        data.filenameSubtract();
+        data.write(myDecryption.getText());
     } else if (argc == 4 && (string) argv[2] == "-d"){
         
     } else {
         cerr << "Incorrect arguments" << endl;
         exit(3);
     }
-    cout << "Program complete" << endl;
+    
     return 0;
 } // main
+

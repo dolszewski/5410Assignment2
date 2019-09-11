@@ -7,11 +7,16 @@ class Crypt {
     private:
       std::string password; //Asked for during construction
       std::string text; //Passed into constructor
+      std::string key;
       void authenticate(); // Called on by decrypt. May need to take an input. Not sure yet
+      std::string HMAC; //Empty when
+    
     public:
       Crypt(std::string text1);
-      std::string encrypt();
-      std::string decrypt();
-      
+      void encrypt();
+      void decrypt();
+      std::string getText();
+      void printKey();
+      void printPassword();
 }; //Crypt
 #endif

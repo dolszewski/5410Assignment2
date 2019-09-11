@@ -1,10 +1,16 @@
 CFLAGS = -O
 CC = g++
-SRC = src/main.cpp src/filehandler.cpp src/crypt.cpp
-OBJ = $(SRC:.cpp = .o)
+SRC1 = src/gsend.cpp src/filehandler.cpp src/crypt.cpp src/lib/PracticalSocket/PracticalSocket.cpp src/client.cpp src/lib/PracticalSocket/common.cpp
+OBJ1 = $(SRC1:.cpp = .o)
+SRC2 = src/grec.cpp src/filehandler.cpp src/crypt.cpp src/lib/PracticalSocket/PracticalSocket.cpp src/server.cpp src/lib/PracticalSocket/common.cpp
+OBJ2 = $(SRC2:.cpp = .o)
 
-Test: $(OBJ)
-	$(CC) $(CFLAGS) -o Test $(OBJ)
+all: gsend grec
+
+gsend: $(OBJ1)
+	$(CC) $(CFLAGS) -o gsend $(OBJ1)
+grec: $(OBJ2)
+	$(CC) $(CFLAGS) -o grec $(OBJ2)
 
 clean:
 	rm -f core *.o
