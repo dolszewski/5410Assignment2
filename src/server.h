@@ -4,6 +4,8 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include <iostream>
+
 #include "lib/PracticalSocket/PracticalSocket.h"
 #include "lib/PracticalSocket/common.h"
 
@@ -11,7 +13,7 @@ class Server {
     private:
         std::string info;
     public:
-        Server(in_port_t PORT_NUMBER);
+        Server(unsigned short PORT_NUMBER);
         std::string getInformation();
 };
 

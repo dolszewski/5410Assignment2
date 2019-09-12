@@ -3,13 +3,18 @@
 #ifndef CRYPT_H
 #define CRYPT_H
 #include <iostream>
+#include <openssl/evp.h>
+#include <openssl/crypto.h>
+#include <openssl/sha.h>
+
 class Crypt {
     private:
       std::string password; //Asked for during construction
       std::string text; //Passed into constructor
-      std::string key;
+      unsigned char key[16];
       void authenticate(); // Called on by decrypt. May need to take an input. Not sure yet
       std::string HMAC; //Empty when
+      void generateKey();
     
     public:
       Crypt(std::string text1);
@@ -18,5 +23,7 @@ class Crypt {
       std::string getText();
       void printKey();
       void printPassword();
+
+    
 }; //Crypt
 #endif

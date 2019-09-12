@@ -8,9 +8,9 @@ OBJ2 = $(SRC2:.cpp = .o)
 all: gsend grec
 
 gsend: $(OBJ1)
-	$(CC) $(CFLAGS) -o gsend $(OBJ1)
+	$(CC) $(CFLAGS) -o gsend -lssl -lcrypto $(OBJ1)
 grec: $(OBJ2)
-	$(CC) $(CFLAGS) -o grec $(OBJ2)
+	$(CC) $(CFLAGS) -o grec -lssl -lcrypto $(OBJ2)
 
 clean:
 	rm -f core *.o

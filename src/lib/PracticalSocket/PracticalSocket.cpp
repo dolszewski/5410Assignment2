@@ -30,6 +30,7 @@
   #include <arpa/inet.h>       // For inet_addr()
   #include <unistd.h>          // For close()
   #include <netinet/in.h>      // For sockaddr_in
+#include <iostream>
   typedef void raw_type;       // Type used for raw data on this platform
 #endif
 
@@ -63,14 +64,13 @@ static void fillAddr(const string &address, unsigned short port,
                      sockaddr_in &addr) {
   memset(&addr, 0, sizeof(addr));  // Zero out address structure
   addr.sin_family = AF_INET;       // Internet address
-
-  hostent *host;  // Resolve name
-  if ((host = gethostbyname(address.c_str())) == NULL) {
-    // strerror() will not work for gethostbyname() and hstrerror() 
-    // is supposedly obsolete
-    throw SocketException("Failed to resolve name (gethostbyname())");
-  }
-  addr.sin_addr.s_addr = *((unsigned long *) host->h_addr_list[0]);
+    std::cout << address << std::endl;
+    int rtnVal = inet_pton(AF_INET, address.c_str(), &addr.sin_addr.s_addr);
+    if(rtnVal == 0) {
+        throw SocketException("failed to convert IP address in fillAddr()");
+    }
+  
+  //addr.sin_addr.s_addr = *((unsigned long *) host->h_addr_list[0]);
 
   addr.sin_port = htons(port);     // Assign port in network byte order
 }
