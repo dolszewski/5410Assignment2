@@ -39,14 +39,14 @@ void Crypt::printPassword() {
 
 void Crypt::generateKey() {
     
-    int keylength = 16;
-    char hexResult[2*keylength+1];
+    int keylength = 64;
+    char hexResult[3*keylength+1];
     const unsigned char salt[] = "KCl";
+    
     int iter = 4096;
-    int success = PKCS5_PBKDF2_HMAC (password.c_str(), sizeof(password)-1, salt, sizeof(salt)-1, iter, EVP_sha512(), keylength, key);
+    int success = PKCS5_PBKDF2_HMAC (password.c_str(), -1, salt, 3, iter, EVP_sha512(), keylength, key);
     for (int i = 0; i < sizeof(key); i++){
-        sprintf(hexResult + (i * 2), "%02x ", 255 & key[i]);
+        printf("%02X ", key[i]);
     }
-    printf("%s\n", hexResult);
 
 }

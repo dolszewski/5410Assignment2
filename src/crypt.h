@@ -11,7 +11,7 @@ class Crypt {
     private:
       std::string password; //Asked for during construction
       std::string text; //Passed into constructor
-      unsigned char key[16];
+      unsigned char key[64];
       void authenticate(); // Called on by decrypt. May need to take an input. Not sure yet
       std::string HMAC; //Empty when
       void generateKey();
