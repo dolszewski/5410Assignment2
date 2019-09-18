@@ -6,15 +6,18 @@
 #include <openssl/evp.h>
 #include <openssl/crypto.h>
 #include <openssl/sha.h>
+#include <openssl/aes.h>
 
 class Crypt {
     private:
-      std::string password; //Asked for during construction
-      std::string text; //Passed into constructor
+      std::string password;
+      std::string text;
+      std::string ctext;
       unsigned char key[64];
-      void authenticate(); // Called on by decrypt. May need to take an input. Not sure yet
-      std::string HMAC; //Empty when
+      void authenticate();
+      unsigned char hash[64];
       void generateKey();
+    void generateHash(int flag);
     
     public:
       Crypt(std::string text1);
@@ -23,6 +26,8 @@ class Crypt {
       std::string getText();
       void printKey();
       void printPassword();
+      std::string getCipherText();
+      void fixText();
 
     
 }; //Crypt

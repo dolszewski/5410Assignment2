@@ -15,22 +15,30 @@ void sendString(CommunicatingSocket *sock, const std::string &str) throw(SocketE
 
 uint32_t recvInt(CommunicatingSocket *sock) throw (std::runtime_error) {
     uint32_t val;
-    if (sock->recv(&val, sizeof(val))!= sizeof(val)) {
+    if (sock->recvFully(&val, sizeof(val))!= sizeof(val)) {
         throw runtime_error("Socket closed during transfer of int");
     }
+    
     return ntohl(val);
 }
 
 std::string recvString(CommunicatingSocket *sock) throw(runtime_error) {
     uint32_t len = recvInt(sock);
+
     char *buffer = new char [len+1];
-    if (sock->recv(buffer, len)!= len) {
+
+    if (sock->recvFully(buffer, len)!= len) {
         delete [] buffer;
         throw runtime_error("Socket closed during read of string");
     }
     buffer[len] = '\0';
-    std::string result(buffer);
+    
+    std::string result;
+    for (int i =0; i <= len ; i++) {
+        result.push_back(buffer[i]);
+    }
     delete [] buffer;
+    std::cout << "Received Successfully" << std::endl;
     return result;
 }
 

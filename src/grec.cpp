@@ -18,16 +18,18 @@ int main(int argc, char *argv[]) {
         Crypt myDecryption(data.read());
         myDecryption.decrypt();
         data.filenameSubtract();
-        data.write(myDecryption.getText());
+        myDecryption.fixText();
+        data.write(myDecryption.getCipherText());
     } else if (argc == 4 && (string) argv[2] == "-d"){
         std::string portN = argv[3];
         unsigned short portNumber = (unsigned short) std::stoul(portN, NULL, 0);
         Server server(portNumber);
         Crypt myDecryption(server.getInformation());
         myDecryption.decrypt();
-        std::cout << myDecryption.getText() << std::endl;
+        std::cout << myDecryption.getCipherText() << std::endl;
         Filehandler data(argv[1]);
-        data.write(myDecryption.getText());
+        myDecryption.fixText();
+        data.write(myDecryption.getCipherText());
     } else {
         cerr << "Incorrect arguments" << endl;
         exit(3);

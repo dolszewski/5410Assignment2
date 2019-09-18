@@ -9,7 +9,7 @@ Client::Client(const char * address, unsigned short PORT_NUMBER, std::string inf
         
         TCPSocket sock(address, PORT_NUMBER);
         sendString(&sock, information);
-        
+                
         //add in success and exit mode
     } catch(runtime_error &e) {
         std::cerr << e.what() << std::endl;

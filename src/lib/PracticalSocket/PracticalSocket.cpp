@@ -64,7 +64,6 @@ static void fillAddr(const string &address, unsigned short port,
                      sockaddr_in &addr) {
   memset(&addr, 0, sizeof(addr));  // Zero out address structure
   addr.sin_family = AF_INET;       // Internet address
-    std::cout << address << std::endl;
     int rtnVal = inet_pton(AF_INET, address.c_str(), &addr.sin_addr.s_addr);
     if(rtnVal == 0) {
         throw SocketException("failed to convert IP address in fillAddr()");
@@ -208,6 +207,21 @@ int CommunicatingSocket::recv(void *buffer, int bufferLen)
   }
 
   return rtn;
+}
+
+size_t CommunicatingSocket::recvFully(void *buffer, int bufferLen)
+throw(SocketException) {
+    int rcount = 0;
+    int len = ::recv(sockDesc, (raw_type *) buffer, bufferLen, 0);
+    while (len > 0 && rcount + len < bufferLen) {
+        rcount += len;
+        len = ::recv(sockDesc, (raw_type *) (((char *) buffer) + rcount),
+                     bufferLen - rcount, 0);
+    }
+    
+    if (len < 0)
+        throw SocketException("Receive failed (recv())");
+    return rcount + len;
 }
 
 string CommunicatingSocket::getForeignAddress() 

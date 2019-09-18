@@ -8,14 +8,16 @@ Filehandler::Filehandler(std::string filename1) : filename(filename1) {}
 
 std::string Filehandler::read() {
     std::string text;
-    std::string line;
-    std::ifstream myFile(filename.c_str());
+    char line;
+    std::ifstream myFile(filename.c_str(), std::ios::binary);
     if ((bool) myFile) {
-        while(getline(myFile,line)) {
-            text = text.append(line);
-            text = text.append("\n");
+        while(myFile.get(line)) {
+            text.push_back(line);
         }
         myFile.close();
+        if (text.empty()){
+            std::cerr << "\nError reading file. Nothing read." << std::endl;
+        }
     } else {
         std::cerr << "File doesn't exist" << std::endl;
         exit(1);
@@ -26,10 +28,10 @@ std::string Filehandler::read() {
 int Filehandler::write(std::string text) {
     std::ifstream myFile(filename.c_str());
     if ((bool) myFile) {
-        std::cerr << "File already exists" << std::endl;
+        std::cerr << "Exit(33): File already exists" << std::endl;
         exit(33);
     } else {
-        std::ofstream myFile(filename.c_str());
+        std::ofstream myFile(filename.c_str(), std::ios::binary);
         myFile << text;
         std::cout << "Saved File" << std::endl;
         myFile.close();
@@ -40,7 +42,7 @@ int Filehandler::write(std::string text) {
 
 void Filehandler::filenameAdd() {
     filename = filename.append(".uf");
-    std::cout << "Changed filename to " << filename << std::endl;
+    std::cout << "\nChanged filename to " << filename << std::endl;
     return;
 }
 

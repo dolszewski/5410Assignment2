@@ -23,7 +23,7 @@ Address parseAddress(char* argv[]) {
         std::cerr << "Unable to parse port." << std::endl;
         exit(1);
     }
-
+ 
     return addr;
 }
 int main(int argc, char *argv[]) {
@@ -36,13 +36,13 @@ int main(int argc, char *argv[]) {
         Crypt myEncryption(data.read());
         myEncryption.encrypt();
         data.filenameAdd();
-        data.write(myEncryption.getText());
+        data.write(myEncryption.getCipherText());
     } else if (argc == 4 && (string) argv[2] == "-d"){
         Address addrServer = parseAddress(argv);
         Filehandler data(argv[1]);
         Crypt myEncryption(data.read());
         myEncryption.encrypt();
-        Client client(addrServer.host.c_str(), addrServer.port, myEncryption.getText());
+        Client client(addrServer.host.c_str(), addrServer.port, myEncryption.getCipherText());
     
     } else {
         cerr << "Incorrect arguments" << endl;

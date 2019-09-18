@@ -7,7 +7,7 @@ Server::Server(unsigned short PORT_NUMBER) {
     
     try {
         TCPServerSocket servSock(PORT_NUMBER);
-        
+        int a = 0;
         for( ; ; ){
             if (!info.empty()){
                 break;
@@ -15,7 +15,8 @@ Server::Server(unsigned short PORT_NUMBER) {
             TCPSocket *sock = servSock.accept();
             this->info = recvString(sock);
             delete sock;
-                
+            
+
         }
         
     } catch (SocketException &e) {

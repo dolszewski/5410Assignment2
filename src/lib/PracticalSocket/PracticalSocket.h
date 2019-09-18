@@ -164,12 +164,22 @@ public:
    *   @exception SocketException thrown if unable to receive data
    */
   int recv(void *buffer, int bufferLen) throw(SocketException);
-
+    /**
+     *   Block until bufferLen bytes are read into the given buffer,
+     *   until the socket is closed or an error is encoutered.  The
+     *   socket must be connected before recvFully can be called.
+     *   @param buffer buffer to receive the data
+     *   @param bufferLen maximum number of bytes to read into buffer
+     *   @return number of bytes read, 0 for EOF, and -1 for error
+     *   @exception SocketException thrown if unable to receive data
+     */
+    size_t recvFully(void *buffer, int bufferLen) throw(SocketException);
   /**
    *   Get the foreign address.  Call connect() before calling recv()
    *   @return foreign address
    *   @exception SocketException thrown if unable to fetch foreign address
    */
+
   string getForeignAddress() throw(SocketException);
 
   /**
